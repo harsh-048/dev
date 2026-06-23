@@ -1,0 +1,82 @@
+Open your github account —> another tab : open https://github.com/mvsanthi123/
+
+Go to repository of  https://github.com/mvsanthi123/ and fork following projects
+
+Login to azure account
+Search azure devops organization
+
+Click on view my organization
+
+6)create new organization
+
+7)Give continue
+
+8)Continue with default name or give name of ur choice                     (Ex :bindiyaaj1)    and give continue
+
+9) Below organization page will be displayed and now go to new projects
+
+
+10)Go to new project+ enter project name and make sure visibility private.---> click on create
+11)Below is the project page looks
+12)  go to “pipeline “ in the left —>create pipeline
+13)  click on GitHub
+14) click on  “maventestazure “ →
+15) below page is displayed:
+Copy below yaml file code:
+
+trigger:
+  branches:
+    include:
+    - main
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'artifact1/pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '17'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'clean package'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'artifact1/target'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+
+
+🔄 Full Flow (What Actually Happens)
+Code pushed to main
+Pipeline triggers
+Azure creates Ubuntu VM
+Runs Maven:
+Builds project
+Runs tests
+Test results published
+Build output stored as artifact (drop)
+
+16) click on “RUN”
+17)click on “stage” you will see below page→ job is not executed…..
+Just scroll line 1: content to rightmost —> you will find a form —> copy paste in new tab and fill the form
+https://aka.ms/azpipelines-parallelism-request
+Name:
+Emai ID:
+ Azure Organization: 
+(example:https://dev.azure.com/bindiyaaj1/)
+public/private: private
+Click on “submit button”
+
+18) To complete task 48 hrs time needed…→ after that when we go to our devops organization:
+
+
+And when we click on our project we will see project stats:pipeline:build succeeded
+
+
